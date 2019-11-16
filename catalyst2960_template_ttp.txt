@@ -7,14 +7,6 @@ ip default-gateway {{ default_gw }}
 ntp server {{ ntp_server }}
 </group>
 
-<group name="vlan_interfaces" macro="check_port_status" del="port_status">
-interface Vlan{{ vlan_num }}
- description {{ vlan_desc | PHRASE }}
- ip address {{ ip_address }} {{ subnet }}
- shut{{ port_status | default("up") }}
-!{{ _end_ }}
-</group>
-
 <macro>
 def check_port_status(data):
     if "down" in data["port_status"]:
@@ -30,6 +22,14 @@ def check_stp_option(data):
         data["portfast"] = "x"
     return data
 </macro>
+
+<group name="vlan_interfaces" macro="check_port_status" del="port_status">
+interface Vlan{{ vlan_num }}
+ description {{ vlan_desc | PHRASE }}
+ ip address {{ ip_address }} {{ subnet }}
+ shut{{ port_status | default("up") }}
+!{{ _end_ }}
+</group>
 
 <group name="l2_interfaces" exclude="ip_setting, no_ip_setting" macro="check_port_status, check_stp_option" del="port_status, stp_option">
 interface {{ port_no }}
