@@ -34,9 +34,9 @@ interface Vlan{{ vlan_num }}
 <group name="l2_interfaces" exclude="ip_setting, no_ip_setting" macro="check_port_status, check_stp_option" del="port_status, stp_option">
 interface {{ port_no }}
  description {{ description | PHRASE }}
- switchport access {{ vlan }}
+ switchport access {{ vlan | default("1") }}
  switchport trunk allowed vlan {{ vlan }}
- switchport mode {{ mode }}
+ switchport mode {{ mode | default("access") }}
  duplex {{ duplex | default("auto") }}
  speed {{ speed | default("auto") }}
  shut{{ port_status | default("up") }}
