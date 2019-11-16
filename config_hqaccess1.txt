@@ -23,48 +23,48 @@ spanning-tree extend system-id
 !
 interface FastEthernet0/1
  description << To PC1 >>
- switchport access 100
+ switchport access vlan 100
  switchport mode access
  spanning-tree portfast
 !
 interface FastEthernet0/2
  description << To PC2 >>
- switchport access 100
+ switchport access vlan 100
  switchport mode access
  spanning-tree portfast
 !
 interface FastEthernet0/3
- switchport access 100
+ switchport access vlan 100
  switchport mode access
  shutdown
  spanning-tree portfast
 !
 interface FastEthernet0/4
- switchport access 100
+ switchport access vlan 100
  switchport mode access
  shutdown
  spanning-tree portfast
 !
 interface FastEthernet0/5
  description << To PC3 >>
- switchport access 101
+ switchport access vlan 101
  switchport mode access
  spanning-tree portfast
 !
 interface FastEthernet0/6
  description << To PC4 >>
- switchport access 101
+ switchport access vlan 101
  switchport mode access
  spanning-tree portfast
 !
 interface FastEthernet0/7
- switchport access 101
+ switchport access vlan 101
  switchport mode access
  shutdown
  spanning-tree portfast
 !
 interface FastEthernet0/8
- switchport access 101
+ switchport access vlan 101
  switchport mode access
  shutdown
  spanning-tree portfast
