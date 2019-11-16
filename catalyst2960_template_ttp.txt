@@ -1,0 +1,50 @@
+<group name="global_settings">
+hostname {{ hostname }}
+enable secret {{ secret }}
+username {{ username }} privilege 15 password {{ password }}
+ip domain-name {{ hostname }}
+ip default-gateway {{ default_gw }}
+ntp server {{ ntp_server }}
+</group>
+
+<group name="vlan_interfaces" macro="check_port_status" del="port_status">
+interface Vlan{{ vlan_num }}
+ description {{ vlan_desc | PHRASE }}
+ ip address {{ ip_address }} {{ subnet }}
+ shut{{ port_status | default("up") }}
+!{{ _end_ }}
+</group>
+
+<macro>
+def check_port_status(data):
+    if "down" in data["port_status"]:
+        data["status"] = "x"
+    else:
+        data["status"] = "o"
+    return data
+
+def check_stp_option(data):
+    if "portfast" in data["stp_option"]:
+        data["portfast"] = "o"
+    else:
+        data["portfast"] = "x"
+    return data
+</macro>
+
+<group name="l2_interfaces" exclude="ip_setting, no_ip_setting" macro="check_port_status, check_stp_option" del="port_status, stp_option">
+interface {{ port_no }}
+ description {{ description | PHRASE }}
+ switchport access {{ vlan }}
+ switchport trunk allowed vlan {{ vlan }}
+ switchport mode {{ mode }}
+ duplex {{ duplex | default("auto") }}
+ speed {{ speed | default("auto") }}
+ shut{{ port_status | default("up") }}
+ spanning-tree {{ stp_option | default("none") }}
+ ip {{ ip_setting }}
+ no ip {{ no_ip_setting }}
+!{{ _end_ }}
+</group>
+
+
+
