@@ -41,8 +41,8 @@ interface {{ port_no }}
  speed {{ speed | default("auto") }}
  shut{{ port_status | default("up") }}
  spanning-tree {{ stp_option | default("none") }}
- ip {{ ip_setting }}
- no ip {{ no_ip_setting }}
+ ip {{ ip_setting | ORPHRASE }}
+ no ip {{ no_ip_setting | ORPHRASE }}
 !{{ _end_ }}
 </group>
 
