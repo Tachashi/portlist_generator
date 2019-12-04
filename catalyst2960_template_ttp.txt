@@ -25,7 +25,7 @@ def check_stp_option(data):
 
 <group name="vlan_interfaces" macro="check_port_status" del="port_status">
 interface Vlan{{ vlan_num }}
- description {{ vlan_desc | PHRASE }}
+ description {{ vlan_desc | ORPHRASE }}
  ip address {{ ip_address }} {{ subnet }}
  shut{{ port_status | default("up") }}
 !{{ _end_ }}
@@ -33,7 +33,7 @@ interface Vlan{{ vlan_num }}
 
 <group name="l2_interfaces" exclude="ip_setting, no_ip_setting" macro="check_port_status, check_stp_option" del="port_status, stp_option">
 interface {{ port_no }}
- description {{ description | PHRASE }}
+ description {{ description | ORPHRASE }}
  switchport access vlan {{ vlan | default("1") }}
  switchport trunk allowed vlan {{ vlan }}
  switchport mode {{ mode | default("access") }}
